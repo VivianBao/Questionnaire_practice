@@ -6,6 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# puts "Cleaning up database..."
+
+# Company.destroy_all
+# Category.destroy_all
+
+# puts "Database cleared!"
+
 company = Company.create!(name: "WorkEvalution")
 puts "Company #{company.name} was created"
 
@@ -14,26 +21,26 @@ team.company = company
 team.save!
 puts "Team #{team.name} was created"
 
-user1 = User.create!(
-  first_name: "Vivian",
-  last_name: 'Bow',
-  email: 'vivian@lewagon.jp',
-  password: '123456',
-  team: team
-)
-puts "User #{user1.first_name} was created"
+# user1 = User.create!(
+#   first_name: "Vivian",
+#   last_name: 'Bow',
+#   email: 'vivian@lewagon.jp',
+#   password: '123456',
+#   team: team
+# )
+# puts "User #{user1.first_name} was created"
 
-user2 = User.create!(
-  first_name: "John",
-  last_name: 'Lemon',
-  email: 'John@lewagon.jp',
-  password: '123456',
-  team: team
-)
-puts "User #{user2.first_name} was created"
+# user2 = User.create!(
+#   first_name: "John",
+#   last_name: 'Lemon',
+#   email: 'John@lewagon.jp',
+#   password: '123456',
+#   team: team
+# )
+# puts "User #{user2.first_name} was created"
 
 
-categories_list = {
+categories_hash = {
   'Problem Solving': {
     'Analysis': ['Analysis', 'Divergent Thinking', 'Experimenting', 'Observation'],
     'Creativity': ['Artistic Sense', 'Imagination', 'Brainstorming', 'Design', 'Design Sense', 'Innovation', 'Insight',
@@ -80,7 +87,22 @@ categories_list = {
                    'Work-Life Balance']
   }
 }
-categories_list.each do |category|
-  Category.create(name: category)
-  Subcategory.create(name)
+categories_hash.each do |category, subhash|
+  category_new = Category.create(name: category.to_s)
+  subhash.each do |subcategory, trait_list|
+    subcategory_new = Subcategory.create(
+      name: subcategory.to_s,
+      category: category_new
+    )
+    trait_list.each do |trait|
+      Trait.create(
+        name: trait,
+        subcategory: subcategory_new
+      )
+    end
+  end
 end
+
+puts "#{Category.all.count} categories created"
+puts "#{Subcategory.all.count} subcategories created"
+puts "#{Trait.all.count} traits created"
