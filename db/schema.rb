@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_103201) do
+ActiveRecord::Schema.define(version: 2022_01_30_110858) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -75,7 +75,9 @@ ActiveRecord::Schema.define(version: 2022_01_30_103201) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "report_id"
+    t.integer "subcategory_id"
     t.index ["report_id"], name: "index_responses_on_report_id"
+    t.index ["subcategory_id"], name: "index_responses_on_subcategory_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -126,6 +128,7 @@ ActiveRecord::Schema.define(version: 2022_01_30_103201) do
   add_foreign_key "questions", "subcategories"
   add_foreign_key "reports", "questionnaires"
   add_foreign_key "responses", "reports"
+  add_foreign_key "responses", "subcategories"
   add_foreign_key "subcategories", "categories"
   add_foreign_key "teams", "companies"
   add_foreign_key "traits", "subcategories"

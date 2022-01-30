@@ -2,10 +2,17 @@ class QuestionnairesController < ApplicationController
   def show
     @questionnaire = Questionnaire.find(params[:id])
     @report = Report.new
+    40.times do
+      @report.responses.build
+    end
     @empty_responses = []
     40.times do
       @empty_responses << Response.new
     end
+    # @report = Report.new
+    # 40.times do
+    #   @report.responses.build
+    # end
   end
 
   def create

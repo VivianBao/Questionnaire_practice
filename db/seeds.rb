@@ -58,11 +58,13 @@ categories_hash.each do |category, subhash|
       category: category_new
     )
     Question.create(
+      question_type: 0,
       question_text: question_traits['question'],
       questionnaire: questionnaire_new,
       subcategory: subcategory_new
     )
     Question.create(
+      question_type: 1,
       question_text: 'Which aspect do you think he/she can work on?',
       questionnaire: questionnaire_new,
       subcategory: subcategory_new

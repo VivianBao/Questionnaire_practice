@@ -1,20 +1,24 @@
 <h1>Questionnaires#show</h1>
 
-<p><%= @questionnaire.name %></p>
-<% @questionnaire.questions.each do |question|  %>
-  <h3><%= question.subcategory.name %></h3>
-  <p><%= question.question_text %></p>
-  <% x = 0 %>
-  <%= simple_form_for @empty_responses[x] do |f|%>
-    <%= f.input :response_text,
-            label: false,
-            as: :check_boxes,
-            # collection_wrapper_tag: 'div',
-            # collection_wrapper_class: 'category-wrapper d-flex justify-content-center mb-3',
-            # item_wrapper_class: 'category-counselor mx-3',
-            # input_html: {class: 'category-selector'},
-            collection: question.subcategory.traits.map {|trait| [trait.name, trait.name]}
-    %>
+<%= form_for @report do |f| %>
+  <%= f.simple_fields_for :responses do |response_form| %>
+    <% @questionnaire.questions.each do |question|  %>
+      <h3><%= question.subcategory.name %></h3>
+      <p><%= question.question_text %></p>
+      <% if question.question_type == 0 %>
+        <%= response_form.input :response_text,
+                    label: false,
+                    as: :radio_buttons,
+                    collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']]
+        %>
+      <% else %>
+        <%= response_form.input :response_text,
+                    label: false,
+                    as: :check_boxes,
+                    collection: question.subcategory.traits.map {|trait| [trait.name.to_s, trait.name.to_s]}
+        %>
+      <% end %>
+    <% end %>
   <% end %>
-  <% x += 1 %>
+  <%= f.submit "Submit Review" %>
 <% end %>
