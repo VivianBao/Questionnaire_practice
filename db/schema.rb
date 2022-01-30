@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_135548) do
+ActiveRecord::Schema.define(version: 2022_01_30_110858) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -64,13 +64,20 @@ ActiveRecord::Schema.define(version: 2022_01_29_135548) do
     t.index ["subcategory_id"], name: "index_questions_on_subcategory_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.integer "questionnaire_id", null: false
+    t.index ["questionnaire_id"], name: "index_reports_on_questionnaire_id"
+  end
+
   create_table "responses", force: :cascade do |t|
-    t.integer "question_option_id", null: false
     t.integer "response_type"
     t.string "response_text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_option_id"], name: "index_responses_on_question_option_id"
+    t.integer "report_id"
+    t.integer "subcategory_id"
+    t.index ["report_id"], name: "index_responses_on_report_id"
+    t.index ["subcategory_id"], name: "index_responses_on_subcategory_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -119,7 +126,9 @@ ActiveRecord::Schema.define(version: 2022_01_29_135548) do
   add_foreign_key "questionnaires", "users", column: "reviewer_id"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "questions", "subcategories"
-  add_foreign_key "responses", "question_options"
+  add_foreign_key "reports", "questionnaires"
+  add_foreign_key "responses", "reports"
+  add_foreign_key "responses", "subcategories"
   add_foreign_key "subcategories", "categories"
   add_foreign_key "teams", "companies"
   add_foreign_key "traits", "subcategories"

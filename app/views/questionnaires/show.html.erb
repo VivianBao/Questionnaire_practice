@@ -1,2 +1,24 @@
 <h1>Questionnaires#show</h1>
-<p>Find me in app/views/questionnaires/show.html.erb</p>
+
+<%= form_for @report do |f| %>
+  <%= f.simple_fields_for :responses do |response_form| %>
+    <% @questionnaire.questions.each do |question|  %>
+      <h3><%= question.subcategory.name %></h3>
+      <p><%= question.question_text %></p>
+      <% if question.question_type == 0 %>
+        <%= response_form.input :response_text,
+                    label: false,
+                    as: :radio_buttons,
+                    collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']]
+        %>
+      <% else %>
+        <%= response_form.input :response_text,
+                    label: false,
+                    as: :check_boxes,
+                    collection: question.subcategory.traits.map {|trait| [trait.name.to_s, trait.name.to_s]}
+        %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= f.submit "Submit Review" %>
+<% end %>
