@@ -5,8 +5,6 @@
   <h3><%= question.subcategory.name %></h3>
   <p><%= question.question_text %></p>
   <% x = 0 %>
-  <% traits_name = [] %>
-  <% question.subcategory.traits.each {|trait| traits_name << [trait.name, trait.name]} %>
   <%= simple_form_for @empty_responses[x] do |f|%>
     <%= f.input :response_text,
             label: false,
@@ -15,7 +13,8 @@
             # collection_wrapper_class: 'category-wrapper d-flex justify-content-center mb-3',
             # item_wrapper_class: 'category-counselor mx-3',
             # input_html: {class: 'category-selector'},
-            collection: traits_name
+            collection: question.subcategory.traits.map {|trait| [trait.name, trait.name]}
     %>
   <% end %>
+  <% x += 1 %>
 <% end %>

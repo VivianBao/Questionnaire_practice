@@ -1,6 +1,7 @@
 class QuestionnairesController < ApplicationController
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    @report = Report.new
     @empty_responses = []
     40.times do
       @empty_responses << Response.new
