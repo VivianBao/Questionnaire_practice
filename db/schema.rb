@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_135548) do
+ActiveRecord::Schema.define(version: 2022_01_30_093217) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 2022_01_29_135548) do
   add_foreign_key "questionnaires", "users", column: "reviewer_id"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "questions", "subcategories"
-  add_foreign_key "responses", "question_options"
   add_foreign_key "subcategories", "categories"
   add_foreign_key "teams", "companies"
   add_foreign_key "traits", "subcategories"

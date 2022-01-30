@@ -2,8 +2,8 @@
 <p>Find me in app/views/pages/home.html.erb</p>
 
 <%= simple_form_for @questionnaire do |f|  %>
-  <%= f.hidden_field :reviewer_id, value: User.all.first %>
-  <%= f.hidden_field :reviewee_id, value: User.all.last %>
+  <%= f.hidden_field :reviewer_id, value: User.all.first.id %>
+  <%= f.hidden_field :reviewee_id, value: User.all.last.id %>
   <%= f.hidden_field :name, value: 'Test' %>
   <%= f.button :submit, 'Review', class: 'sos-button btn btn-primary mx-2' %>
 <% end %>

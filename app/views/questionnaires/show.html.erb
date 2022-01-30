@@ -1,2 +1,21 @@
 <h1>Questionnaires#show</h1>
-<p>Find me in app/views/questionnaires/show.html.erb</p>
+
+<p><%= @questionnaire.name %></p>
+<% @questionnaire.questions.each do |question|  %>
+  <h3><%= question.subcategory.name %></h3>
+  <p><%= question.question_text %></p>
+  <% x = 0 %>
+  <% traits_name = [] %>
+  <% question.subcategory.traits.each {|trait| traits_name << [trait.name, trait.name]} %>
+  <%= simple_form_for @empty_responses[x] do |f|%>
+    <%= f.input :response_text,
+            label: false,
+            as: :check_boxes,
+            # collection_wrapper_tag: 'div',
+            # collection_wrapper_class: 'category-wrapper d-flex justify-content-center mb-3',
+            # item_wrapper_class: 'category-counselor mx-3',
+            # input_html: {class: 'category-selector'},
+            collection: traits_name
+    %>
+  <% end %>
+<% end %>
