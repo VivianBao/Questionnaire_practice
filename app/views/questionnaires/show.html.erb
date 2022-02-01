@@ -1,7 +1,7 @@
 <h1>Questionnaires#show</h1>
 
 <%= form_for @report do |f| %>
-  <%= f.simple_fields_for :responses do |response_form| %>
+  <%= f.simple_fields_for :responses, Response.new() do |response_form| %>
     <% @questionnaire.questions.each do |question|  %>
       <h3><%= question.subcategory.name %></h3>
       <p><%= question.question_text %></p>
@@ -9,7 +9,7 @@
         <%= response_form.input :response_text,
                     label: false,
                     as: :radio_buttons,
-                    collection: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']]
+                    collection: 1..5
         %>
       <% else %>
         <%= response_form.input :response_text,
